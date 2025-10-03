@@ -6,7 +6,7 @@ import { Task } from './tasks/entities/tasks.entity';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'sqlite',
+      type: 'better-sqlite3',
       database: ':memory:',
       entities: [Task],
       synchronize: true,
