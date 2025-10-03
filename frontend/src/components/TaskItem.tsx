@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Task } from '../types';
 
 export const TaskItem: React.FC<{ task: Task }> = ({ task }) => {
-  const [showSubtasks, setShowSubtasks] = useState(true);
 
   return (
     <div
@@ -15,11 +14,17 @@ export const TaskItem: React.FC<{ task: Task }> = ({ task }) => {
         marginLeft: task.parentId ? '2rem' : '0',
       }}
     >
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
         <div>
           <strong>{task.title}</strong>
-        </div> 
+        </div>
       </div>
     </div>
-  )
+  );
 };

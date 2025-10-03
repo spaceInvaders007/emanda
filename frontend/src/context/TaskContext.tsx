@@ -9,7 +9,9 @@ interface TaskContextType {
 
 const TaskContext = createContext<TaskContextType | undefined>(undefined);
 
-export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [tasks, setTasks] = useState<Task[]>([]);
 
   useEffect(() => {
@@ -17,13 +19,18 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const addTask = async (title: string, parentId?: number) => {
-    const newTask = await createTask(title, parentId);
+    await createTask(title, parentId);
     fetchTasks().then(setTasks);
   };
 
-  return <TaskContext.Provider value={{ tasks, addTask }}>{children}</TaskContext.Provider>;
+  return (
+    <TaskContext.Provider value={{ tasks, addTask }}>
+      {children}
+    </TaskContext.Provider>
+  );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useTasks = (): TaskContextType => {
   const context = useContext(TaskContext);
   if (!context) throw new Error('useTasks must be used within TaskProvider');

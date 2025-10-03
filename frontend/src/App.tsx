@@ -9,8 +9,19 @@ const Main = () => {
   return (
     <div>
       <h1>Task Manager</h1>
-      <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="New Task" />
-      <button onClick={() => { addTask(title); setTitle(''); }}>Add Task</button>
+      <input
+        value={title}
+        onChange={e => setTitle(e.target.value)}
+        placeholder="New Task"
+      />
+      <button
+        onClick={() => {
+          addTask(title);
+          setTitle('');
+        }}
+      >
+        Add Task
+      </button>
       <TaskList />
     </div>
   );

@@ -1,4 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
 
 @Entity()
 export class Task {
@@ -8,9 +14,9 @@ export class Task {
   @Column()
   title!: string;
 
-  @ManyToOne(() => Task, (task) => task.subtasks, { nullable: true })
+  @ManyToOne(() => Task, task => task.subtasks, { nullable: true })
   parent?: Task;
 
-  @OneToMany(() => Task, (task) => task.parent)
+  @OneToMany(() => Task, task => task.parent)
   subtasks!: Task[];
 }
