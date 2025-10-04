@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, IsNull } from 'typeorm';
 import { Task } from './entities/tasks.entity';
 import { CreateTaskDto } from './dto/create-task.dto';
 
@@ -20,7 +20,32 @@ export class TasksService {
   }
 
   async findAll(): Promise<Task[]> {
-    return this.tasksRepo.find({ relations: ['subtasks', 'parent'] });
+    const tasks = await this.tasksRepo.find({ 
+      where: { parent: IsNull() },
+      relations: ['subtasks', 'parent'] 
+    });
+    
+    // Recursively load all nested subtasks
+    for (const task of tasks) {
+      await this.loadSubtasksRecursively(task);
+    }
+    
+    return tasks;
+  }
+
+  private async loadSubtasksRecursively(task: Task): Promise<void> {
+    if (task.subtasks && task.subtasks.length > 0) {
+      for (const subtask of task.subtasks) {
+        const fullSubtask = await this.tasksRepo.findOne({
+          where: { id: subtask.id },
+          relations: ['subtasks', 'parent']
+        });
+        if (fullSubtask) {
+          Object.assign(subtask, fullSubtask);
+          await this.loadSubtasksRecursively(subtask);
+        }
+      }
+    }
   }
 
   async findSubtasks(parentId: number): Promise<Task[]> {
