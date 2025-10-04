@@ -1,4 +1,11 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  BadRequestException,
+} from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 
@@ -14,5 +21,14 @@ export class TasksController {
   @Get()
   findAll() {
     return this.tasksService.findAll();
+  }
+
+  @Get(':id/subtasks')
+  findSubtasks(@Param('id') id: string) {
+    const parentId = parseInt(id, 10);
+    if (isNaN(parentId)) {
+      throw new BadRequestException('Invalid task ID');
+    }
+    return this.tasksService.findSubtasks(parentId);
   }
 }

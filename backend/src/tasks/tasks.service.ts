@@ -12,12 +12,21 @@ export class TasksService {
     const task = new Task();
     task.title = createTaskDto.title;
     if (createTaskDto.parentId) {
-      task.parent = (await this.tasksRepo.findOneBy({ id: createTaskDto.parentId })) ?? undefined;
+      task.parent =
+        (await this.tasksRepo.findOneBy({ id: createTaskDto.parentId })) ??
+        undefined;
     }
     return this.tasksRepo.save(task);
   }
 
   async findAll(): Promise<Task[]> {
     return this.tasksRepo.find({ relations: ['subtasks', 'parent'] });
+  }
+
+  async findSubtasks(parentId: number): Promise<Task[]> {
+    return this.tasksRepo.find({
+      where: { parent: { id: parentId } },
+      relations: ['subtasks', 'parent'],
+    });
   }
 }

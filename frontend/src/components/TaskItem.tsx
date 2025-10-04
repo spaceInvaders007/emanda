@@ -2,7 +2,6 @@ import React from 'react';
 import { Task } from '../types';
 
 export const TaskItem: React.FC<{ task: Task }> = ({ task }) => {
-
   return (
     <div
       style={{
