@@ -1,24 +1,23 @@
-version: '3.8'
-
 services:
   backend:
-    container_name: backend
+    platform: linux/arm64   
     build:
       context: ./backend
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
-    networks:
-      - tasknet
+
+    networks: [tasknet]
 
   frontend:
+    platform: linux/arm64  
     build:
       context: ./frontend
+      dockerfile: Dockerfile
     ports:
       - "8080:80"
-    depends_on:
-      - backend
-    networks:
-      - tasknet
+    depends_on: [backend]
+    networks: [tasknet]
 
 networks:
   tasknet:
