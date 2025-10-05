@@ -2,6 +2,7 @@ import React from 'react';
 import { TaskProvider } from './context/TaskContext';
 import { TaskList } from './components/TaskList';
 import { MainTaskForm } from './components/MainTaskForm';
+import { ResetButton } from './components/ResetButton';
 import { theme } from './styles/theme';
 
 const Main = () => {
@@ -45,6 +46,7 @@ const Main = () => {
       </header>
 
       <MainTaskForm />
+      <ResetButton />
       <TaskList />
     </div>
   );

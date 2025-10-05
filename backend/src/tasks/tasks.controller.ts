@@ -4,6 +4,7 @@ import {
   Post,
   Body,
   Param,
+  Delete,
   BadRequestException,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
@@ -30,5 +31,19 @@ export class TasksController {
       throw new BadRequestException('Invalid task ID');
     }
     return this.tasksService.findSubtasks(parentId);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    const taskId = parseInt(id, 10);
+    if (isNaN(taskId)) {
+      throw new BadRequestException('Invalid task ID');
+    }
+    return this.tasksService.remove(taskId);
+  }
+
+  @Delete()
+  removeAll() {
+    return this.tasksService.removeAll();
   }
 }

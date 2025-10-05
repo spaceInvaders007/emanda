@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { Task } from '../types';
 import { Card } from './ui/Card';
+import { Button } from './ui/Button';
 import { SubtaskForm } from './SubtaskForm';
 import { SubtaskList } from './SubtaskList';
+import { useTasks } from '../context/TaskContext';
 import { theme } from '../styles/theme';
+import { MdDeleteOutline } from 'react-icons/md';
 
 interface TaskItemProps {
   task: Task;
@@ -12,8 +15,23 @@ interface TaskItemProps {
 export const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
   const [showSubtasks, setShowSubtasks] = useState(true);
   const [showAddSubtask, setShowAddSubtask] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const { removeTask } = useTasks();
 
   const isSubtask = !!task.parentId;
+
+  const handleDelete = async () => {
+    if (window.confirm(`Are you sure you want to delete "${task.title}" and all its subtasks?`)) {
+      setIsDeleting(true);
+      try {
+        await removeTask(task.id);
+      } catch (error) {
+        console.error('Failed to delete task:', error);
+      } finally {
+        setIsDeleting(false);
+      }
+    }
+  };
 
   return (
     <Card
@@ -33,7 +51,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
           marginBottom: task.subtasks && task.subtasks.length > 0 ? theme.spacing.sm : 0,
         }}
       >
-        <div>
+        <div style={{ flex: 1 }}>
           <h3
             style={{
               margin: 0,
@@ -44,6 +62,35 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
           >
             {task.title}
           </h3>
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            gap: theme.spacing.sm,
+            alignItems: 'center',
+          }}
+        >
+          <Button
+            variant="danger"
+            size="sm"
+            onClick={handleDelete}
+            disabled={isDeleting}
+            style={{
+              opacity: isDeleting ? 0.6 : 1,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              minWidth: '32px',
+              height: '32px',
+              padding: 0,
+            }}
+          >
+            {isDeleting ? (
+              <span style={{ fontSize: '12px' }}>...</span>
+            ) : (
+                  <MdDeleteOutline style={{ fontSize: '16px', color: 'white' }} />
+            )}
+          </Button>
         </div>
       </div>
 

@@ -45,7 +45,7 @@ export const MainTaskForm: React.FC = () => {
           style={{
             display: 'flex',
             gap: theme.spacing.sm,
-            alignItems: 'flex-end',
+            alignItems: 'center',
           }}
         >
           <div style={{ flex: 1 }}>

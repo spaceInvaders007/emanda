@@ -54,4 +54,36 @@ export class TasksService {
       relations: ['subtasks', 'parent'],
     });
   }
+
+  async remove(id: number): Promise<{ message: string }> {
+    const task = await this.tasksRepo.findOne({
+      where: { id },
+      relations: ['subtasks'],
+    });
+
+    if (!task) {
+      throw new Error('Task not found');
+    }
+
+    // Recursively delete all subtasks first
+    if (task.subtasks && task.subtasks.length > 0) {
+      for (const subtask of task.subtasks) {
+        await this.remove(subtask.id);
+      }
+    }
+
+    await this.tasksRepo.remove(task);
+    return { message: 'Task deleted successfully' };
+  }
+
+  async removeAll(): Promise<{ message: string; deletedCount: number }> {
+    const tasks = await this.tasksRepo.find();
+    const deletedCount = tasks.length;
+    
+    await this.tasksRepo.clear();
+    return { 
+      message: 'All tasks deleted successfully',
+      deletedCount 
+    };
+  }
 }
