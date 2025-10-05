@@ -186,3 +186,39 @@ Developer Experience:
 - Add CI/CD pipeline with automated testing
 
 - Create Docker production configurations
+
+# Chat about what you would have asked prior to starting this and post doing it
+
+Prior:
+
+- How many concurrent users are we expecting
+
+- From what regions are our users, local, regional or global
+
+- Do we need Authentication, and if so what kind of security should we add for the logging
+
+- Is there any data validation that we need to implement
+
+- How much do we expect the app to grow, will we need Redux or Zustand for a more complex state management or we stick with Context for now and we decide that later
+
+- How deep do we want to nest subtasks
+
+- Do we want to use any design library
+
+Post:
+
+- We need comprehensive error handling
+
+- Should we implement API versioning so we can handle future updates
+
+- What observability systems should we hook into the system
+
+- What is our scalability strategy, should we think of horizontal scaling, load balancing and database sharding
+
+- Do we need to allow users to manipulate the same task concurrently, are going to need websockets
+
+- What is our support and maintenance strategy
+
+- How can we create more functionality that creates more revenue
+
+- Are we deploying both repos on AWS, what service are we going to use 
