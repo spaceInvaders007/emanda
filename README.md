@@ -97,3 +97,92 @@ When you're done, please submit:
 
 Feel free to clarify anything by reaching out to the team.
 
+
+## short description of what you implemented and why
+
+I extended the existing task management application to support hierarchical subtasks with a professional user interface. 
+
+The key additions include:
+
+for Frontend:
+
+- Added UI controls to create subtasks under any existing task
+
+- Created a professional design system with reusable components (Button, Input, Card, Modal)
+
+- Added delete functionality for individual tasks and a reset button to clear all tasks
+
+- Implemented a custom modal dialog to replace browser alerts for task deletion confirmation
+
+- Implemented proper code splitting and component architecture for maintainability
+
+for Backend:
+
+- Added a new REST endpoint GET /api/tasks/:id/subtasks to retrieve subtasks for a specific parent task
+
+- Enhanced the existing service layer to support recursive subtask loading
+I
+- Implemented proper validation and error handling for the new endpoint
+
+- Added the functionality to delete tasks
+
+
+## A brief roadmap outlining what you would improve or expand on with more time.
+
+Enhanced User Experience:
+
+- Add drag-and-drop functionality to reorder tasks and subtasks
+
+- Implement task completion status with checkboxes and visual indicators
+
+- Add due dates and priority levels for tasks
+
+- Create task templates for common workflows
+
+- Add search and filtering capabilities
+
+- Implement task categories or tags for better organization
+
+- Add time tracking for tasks
+
+- Implement task archiving instead of permanent deletion
+
+Technical Improvements:
+
+- Add comprehensive unit and integration tests
+
+- Implement real-time collaboration with WebSocket connections
+
+- Add offline support with local storage synchronization
+
+- Create a mobile-responsive design
+
+Data & Analytics:
+
+- Add task completion analytics and reporting
+
+- Implement task progress tracking with visual charts
+
+- Create export functionality (PDF, CSV, JSON)
+
+- Add task history and audit logs
+
+Performance & Scalability:
+
+- Implement pagination for large task lists
+
+- Add database persistence (PostgreSQL/MySQL) instead of in-memory SQLite
+
+- Implement caching strategies for better performance
+
+- Add API rate limiting and authentication
+
+Developer Experience:
+
+- Add comprehensive API documentation
+
+- Implement proper error boundaries and logging
+
+- Add CI/CD pipeline with automated testing
+
+- Create Docker production configurations
